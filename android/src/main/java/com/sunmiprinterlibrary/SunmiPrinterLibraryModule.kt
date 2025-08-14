@@ -550,6 +550,17 @@ class SunmiPrinterLibraryModule(reactContext: ReactApplicationContext) :
     }
   }
 
+   @ReactMethod
+  fun openDrawer(promise: Promise) {
+    validatePrinterService(promise)
+    try {
+      val callback = makeInnerResultCallback(promise, "native#cutPaper is failed.")
+      printerService?.openDrawer(callback)
+    } catch (e: Exception) {
+      promise.reject("0", "native#cutPaper is failed. " + e.message)
+    }
+  }
+
   @ReactMethod
   fun printBitmapBase64(base64: String, pixelWidth: Int, promise: Promise) {
     validatePrinterService(promise)
