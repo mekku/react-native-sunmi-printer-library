@@ -709,7 +709,7 @@ export const openDrawer = Platform.select<() => Promise<void>>({
 /**
  * Get the number of times a drawer has been used
  */
-export const getOpenDrawerTimes = Platform.select<() => Promise<void>>({
+export const getOpenDrawerTimes = Platform.select<() => Promise<number>>({
   android: () => sunmiPrinterLibrary.getOpenDrawerTimes(),
   default: () => Promise.reject(OS_DOES_NOT_SUPPORT),
 })
@@ -717,7 +717,7 @@ export const getOpenDrawerTimes = Platform.select<() => Promise<void>>({
 /**
  * Get the status of the drawer
  */
-export const getDrawerStatus = Platform.select<() => Promise<void>>({
+export const getDrawerStatus = Platform.select<() => Promise<number>>({
   android: () => sunmiPrinterLibrary.getDrawerStatus(),
   default: () => Promise.reject(OS_DOES_NOT_SUPPORT),
 })
