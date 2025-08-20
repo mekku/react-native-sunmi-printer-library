@@ -66,6 +66,8 @@ interface SunmiPrinterLibrary {
   cutPaper: () => Promise<void>
   openDrawer: () => Promise<void>
   getCutPaperTimes: () => Promise<number>
+  getOpenDrawerTimes: () => Promise<number>
+  getDrawerStatus: () => Promise<number>
   printBitmapBase64: (base64: string, pixelWidth: number) => Promise<void>
   printBitmapBase64Custom: (
     base64: string,
@@ -686,6 +688,17 @@ export const cutPaper = Platform.select<() => Promise<void>>({
 })
 
 /**
+ * Get the number of times a cutter has been used
+ *
+ * @note
+ * It is only available to the desktop devices with a cutter.
+ */
+export const getCutPaperTimes = Platform.select<() => Promise<number>>({
+  android: () => sunmiPrinterLibrary.getCutPaperTimes(),
+  default: () => Promise.reject(OS_DOES_NOT_SUPPORT),
+})
+
+/**
  * Open drawer
  */
 export const openDrawer = Platform.select<() => Promise<void>>({
@@ -694,13 +707,18 @@ export const openDrawer = Platform.select<() => Promise<void>>({
 })
 
 /**
- * Get the number of times a cutter has been used
- *
- * @note
- * It is only available to the desktop devices with a cutter.
+ * Get the number of times a drawer has been used
  */
-export const getCutPaperTimes = Platform.select<() => Promise<number>>({
-  android: () => sunmiPrinterLibrary.getCutPaperTimes(),
+export const getOpenDrawerTimes = Platform.select<() => Promise<void>>({
+  android: () => sunmiPrinterLibrary.getOpenDrawerTimes(),
+  default: () => Promise.reject(OS_DOES_NOT_SUPPORT),
+})
+
+/**
+ * Get the status of the drawer
+ */
+export const getDrawerStatus = Platform.select<() => Promise<void>>({
+  android: () => sunmiPrinterLibrary.getDrawerStatus(),
   default: () => Promise.reject(OS_DOES_NOT_SUPPORT),
 })
 
