@@ -550,14 +550,36 @@ class SunmiPrinterLibraryModule(reactContext: ReactApplicationContext) :
     }
   }
 
-   @ReactMethod
+  @ReactMethod
   fun openDrawer(promise: Promise) {
     validatePrinterService(promise)
     try {
-      val callback = makeInnerResultCallback(promise, "native#cutPaper is failed.")
+      val callback = makeInnerResultCallback(promise, "native#openDrawer is failed.")
       printerService?.openDrawer(callback)
     } catch (e: Exception) {
-      promise.reject("0", "native#cutPaper is failed. " + e.message)
+      promise.reject("0", "native#openDrawer is failed. " + e.message)
+    }
+  }
+
+  @ReactMethod
+  fun getOpenDrawerTimes(promise: Promise) {
+    validatePrinterService(promise)
+    try {
+      val result = printerService?.getOpenDrawerTimes()
+      promise.resolve(result)
+    } catch (e: Exception) {
+      promise.reject("0", "native#getOpenDrawerTimes is failed. " + e.message)
+    }
+  }
+
+  @ReactMethod
+  fun getDrawerStatus(promise: Promise) {
+    validatePrinterService(promise)
+    try {
+      val result = printerService?.getDrawerStatus()
+      promise.resolve(result)
+    } catch (e: Exception) {
+      promise.reject("0", "native#getDrawerStatus is failed. " + e.message)
     }
   }
 
