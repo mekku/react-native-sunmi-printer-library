@@ -64,6 +64,7 @@ interface SunmiPrinterLibrary {
   ) => Promise<void>
   lineWrap: (count: number) => Promise<void>
   cutPaper: () => Promise<void>
+  openDrawer: () => Promise<void>
   getCutPaperTimes: () => Promise<number>
   printBitmapBase64: (base64: string, pixelWidth: number) => Promise<void>
   printBitmapBase64Custom: (
@@ -681,6 +682,14 @@ export const lineWrap = Platform.select<(count: number) => Promise<void>>({
  */
 export const cutPaper = Platform.select<() => Promise<void>>({
   android: () => sunmiPrinterLibrary.cutPaper(),
+  default: () => Promise.reject(OS_DOES_NOT_SUPPORT),
+})
+
+/**
+ * Open drawer
+ */
+export const openDrawer = Platform.select<() => Promise<void>>({
+  android: () => sunmiPrinterLibrary.openDrawer(),
   default: () => Promise.reject(OS_DOES_NOT_SUPPORT),
 })
 
